@@ -1,8 +1,8 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import SearchAutocomplete from "./features/map/components/searchAutocomplete";
 import Map, { MapWrapper } from "./features/map/Map";
+import SearchAutocomplete from "./features/map/components/searchAutocomplete";
 
 export default function App() {
   const mapsKey = process.env.REACT_APP_GOOGLE_API_KEY;
