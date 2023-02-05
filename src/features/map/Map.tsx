@@ -1,36 +1,25 @@
-import { useMemo, useState } from "react";
 import {
-  GoogleMap,
-  useLoadScript,
-  MarkerF,
+  GoogleMap, MarkerF, useLoadScript
 } from "@react-google-maps/api";
-
-export default function GoogleMaps() {
-  const googleMapsApiKey = process.env.REACT_APP_GOOGLE_API_KEY;
-  if (googleMapsApiKey === undefined) {
-    return <div>Error</div>;
-  }
-  return <Map googleMapsApiKey={googleMapsApiKey} />;
-}
+import React, { useMemo, useState } from "react";
 
 type Coordinates = {
   lat: number;
   lng: number;
 };
-type MapProps = {
-  googleMapsApiKey: string;
-};
 
-function Map({ googleMapsApiKey }: MapProps) {
-  const center = useMemo(() => ({ lat: 38.886518, lng: -121.0166301 }), []);
-  const [, setSelectedMarker] = useState<Coordinates | null>(
-    center
-  );
-
+export const MapWrapper = ({children, googleMapsApiKey}: {children: React.ReactNode, googleMapsApiKey: string}) => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: googleMapsApiKey,
+    libraries: ["places"]
   });
   if (!isLoaded) return <div>Loading...</div>;
+  return <>{children}</>
+}
+
+function Map() {
+  const center = useMemo(() => ({ lat: 38.886518, lng: -121.0166301 }), []);
+  const [, setSelectedMarker] = useState<Coordinates | null>(center);
 
   return (
     <>
@@ -69,3 +58,6 @@ function Map({ googleMapsApiKey }: MapProps) {
     </>
   );
 }
+
+
+export default Map;

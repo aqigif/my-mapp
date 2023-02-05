@@ -1,22 +1,27 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import { Provider } from 'react-redux';
-import { store } from './redux/store';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-import './index.css';
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
+import App from "./App";
+import "./App.css";
+import "./index.css";
+import { store } from "./redux/store";
+import reportWebVitals from "./reportWebVitals";
 
-const container = document.getElementById('root')!;
+const container = document.getElementById("root")!;
 const root = createRoot(container);
+const theme = createTheme();
 
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>
 );
