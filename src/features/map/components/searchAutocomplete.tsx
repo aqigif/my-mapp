@@ -1,20 +1,20 @@
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import {
-  Grid,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
-  ListItemText,
-  Typography,
+  Typography
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { debounce } from "@mui/material/utils";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { Box } from "@mui/system";
 import parse from "autosuggest-highlight/parse";
 import * as React from "react";
-import { Box } from "@mui/system";
+import { SelectedPlaceType } from "../mapSlice";
 
 const autocompleteService = { current: null };
+const geocoder = { current: null };
 
 interface MainTextMatchedSubstrings {
   offset: number;
@@ -23,14 +23,30 @@ interface MainTextMatchedSubstrings {
 interface StructuredFormatting {
   main_text: string;
   secondary_text: string;
-  main_text_matched_substrings?: readonly MainTextMatchedSubstrings[];
+  main_text_matched_substrings?: MainTextMatchedSubstrings[];
 }
-interface PlaceType {
+export interface PlaceType {
   description: string;
   structured_formatting: StructuredFormatting;
+  place_id: string;
+}
+interface PlaceDetailType {
+  description: string;
+  structured_formatting: StructuredFormatting;
+  place_id: string;
+  geometry: {
+    location: {
+      lat: () => number;
+      lng: () => number;
+    };
+  };
 }
 
-export default function SearchAutocomplete() {
+export default function SearchAutocomplete({
+  onSelectLocation,
+}: {
+  onSelectLocation?: (place: SelectedPlaceType) => void;
+}) {
   const [value, setValue] = React.useState<PlaceType | null>(null);
   const [inputValue, setInputValue] = React.useState("");
   const [options, setOptions] = React.useState<readonly PlaceType[]>([]);
@@ -64,6 +80,13 @@ export default function SearchAutocomplete() {
       return undefined;
     }
 
+    if (!geocoder.current && (window as any).google) {
+      geocoder.current = new (window as any).google.maps.Geocoder();
+    }
+    if (!geocoder.current) {
+      return undefined;
+    }
+
     if (inputValue === "") {
       setOptions(value ? [value] : []);
       return undefined;
@@ -90,6 +113,46 @@ export default function SearchAutocomplete() {
     };
   }, [value, inputValue, fetch]);
 
+  const onSelectFetch = React.useMemo(
+    () =>
+      debounce(
+        (
+          request: { placeId: string },
+          callback: (results?: readonly PlaceDetailType[]) => void
+        ) => {
+          (geocoder.current as any).geocode(request, callback);
+        },
+        400
+      ),
+    []
+  );
+
+  const onSelect = (place: PlaceType) => {
+    setOptions(place ? [...options] : options);
+    setValue(place);
+    setInputValue(place.structured_formatting.main_text);
+
+    onSelectFetch(
+      { placeId: place.place_id },
+      (results?: readonly PlaceDetailType[]) => {
+        if (results?.[0]) {
+          const lat = results[0].geometry.location.lat();
+          const lng = results[0].geometry.location.lng();
+          if (onSelectLocation) {
+            onSelectLocation({
+              description: place.description,
+              structured_formatting: place.structured_formatting,
+              place_id: place.place_id,
+              location: {
+                lat,
+                lng,
+              },
+            });
+          }
+        }
+      }
+    );
+  };
   return (
     <>
       <TextField
@@ -116,13 +179,11 @@ export default function SearchAutocomplete() {
           );
 
           return (
-            <ListItem disablePadding key={index + "place"}>
+            <ListItem disablePadding key={option.place_id + index}>
               <ListItemButton
                 className="px-0 w-full"
                 onClick={() => {
-                  setOptions(option ? [option, ...options] : options);
-                  setValue(option);
-                  setInputValue(option.structured_formatting.main_text)
+                  onSelect(option);
                 }}
               >
                 <ListItemIcon>
