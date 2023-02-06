@@ -10,21 +10,9 @@ import {
 import { Box } from "@mui/system";
 import parse from "autosuggest-highlight/parse";
 import React from "react";
-import { PlaceType, SelectedPlaceType, StructuredFormatting } from "../mapTypes";
+import { PlaceDetailGeoCodeType, PlaceType, SelectedPlaceType } from "../mapTypes";
 
 const geocoder = { current: null };
-
-interface PlaceDetailType {
-    description: string;
-    structured_formatting: StructuredFormatting;
-    place_id: string;
-    geometry: {
-      location: {
-        lat: () => number;
-        lng: () => number;
-      };
-    };
-  }
 
 export default function PlaceList({
   options,
@@ -52,7 +40,7 @@ export default function PlaceList({
         debounce(
           (
             request: { placeId: string },
-            callback: (results?: readonly PlaceDetailType[]) => void
+            callback: (results?: readonly PlaceDetailGeoCodeType[]) => void
           ) => {
             (geocoder.current as any).geocode(request, callback);
           },
@@ -66,7 +54,7 @@ export default function PlaceList({
   
       onSelectFetch(
         { placeId: place.place_id },
-        (results?: readonly PlaceDetailType[]) => {
+        (results?: readonly PlaceDetailGeoCodeType[]) => {
           if (results?.[0]) {
             const lat = results[0].geometry.location.lat();
             const lng = results[0].geometry.location.lng();

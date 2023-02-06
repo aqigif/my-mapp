@@ -23,6 +23,17 @@ export interface SelectedPlaceType {
   };
 }
 
+export interface PlaceDetailGeoCodeType {
+    description: string;
+    structured_formatting: StructuredFormatting;
+    place_id: string;
+    geometry: {
+      location: {
+        lat: () => number;
+        lng: () => number;
+      };
+    };
+  }
 export interface MapState {
   selectedPlace: SelectedPlaceType | null;
   searchOptions: PlaceType[];
