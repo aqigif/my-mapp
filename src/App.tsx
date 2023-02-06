@@ -32,6 +32,7 @@ export default function App() {
   const selectedLocation = selectedPlace?.location ?? null;
 
   const onSelectLocation = (place: SelectedPlaceType) => {
+    getPlaceDetailService(place.place_id)
     dispatch(
       actionSelectPlace({
         description: place.description,
