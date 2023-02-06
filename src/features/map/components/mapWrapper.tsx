@@ -1,7 +1,7 @@
 import { useLoadScript } from "@react-google-maps/api";
 import React from "react";
 
-export const MapWrapper = ({
+const MapWrapper = ({
   children,
   googleMapsApiKey,
 }: {
