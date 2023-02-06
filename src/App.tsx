@@ -44,6 +44,7 @@ export default function App() {
               alignItems: "center",
             }}
           >
+            <img src="/my-mapp-logo.png" alt="brand-logo" className="h-20 mb-5 -mt-10" />
             <SearchAutocomplete onSelectLocation={onSelectLocation} />
           </Box>
         </Grid>

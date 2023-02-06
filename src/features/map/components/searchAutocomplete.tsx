@@ -1,10 +1,14 @@
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import Search from "@mui/icons-material/Search";
+import Close from "@mui/icons-material/Close";
 import {
+  IconButton,
+  InputAdornment,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
-  Typography
+  Typography,
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { debounce } from "@mui/material/utils";
@@ -162,7 +166,24 @@ export default function SearchAutocomplete({
         onChange={(event) => {
           setInputValue(event.target.value);
         }}
-        placeholder="Search ..."
+        placeholder="Find your desired place ..."
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              {inputValue ? (
+                <IconButton onClick={() => {
+                  setInputValue("");
+                  setValue(null)
+                  setOptions([])
+                }}>
+                  <Close />
+                </IconButton>
+              ) : (
+                <Search />
+              )}
+            </InputAdornment>
+          ),
+        }}
       />
 
       <List disablePadding className="mx-0 w-full">
