@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../redux/store";
-import { PlaceType } from "./components/searchAutocomplete";
 
 interface MainTextMatchedSubstrings {
   offset: number;
@@ -10,6 +9,12 @@ export interface StructuredFormatting {
   main_text: string;
   secondary_text: string;
   main_text_matched_substrings?: MainTextMatchedSubstrings[];
+}
+
+export interface PlaceType {
+  description: string;
+  structured_formatting: StructuredFormatting;
+  place_id: string;
 }
 export interface SelectedPlaceType {
   description: string;

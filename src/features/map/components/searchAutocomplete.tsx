@@ -7,23 +7,9 @@ import {
 import TextField from "@mui/material/TextField";
 import { debounce } from "@mui/material/utils";
 import * as React from "react";
+import { PlaceType } from "../mapSlice";
 
 const autocompleteService = { current: null };
-
-interface MainTextMatchedSubstrings {
-  offset: number;
-  length: number;
-}
-interface StructuredFormatting {
-  main_text: string;
-  secondary_text: string;
-  main_text_matched_substrings?: MainTextMatchedSubstrings[];
-}
-export interface PlaceType {
-  description: string;
-  structured_formatting: StructuredFormatting;
-  place_id: string;
-}
 
 export default function SearchAutocomplete({
   onSearchGetOptions,

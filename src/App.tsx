@@ -2,9 +2,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Map from "./features/map/Map";
-import SearchAutocomplete, {
-  PlaceType,
-} from "./features/map/components/searchAutocomplete";
+import SearchAutocomplete from "./features/map/components/searchAutocomplete";
 import MapWrapper from "./features/map/components/mapWrapper";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import {
@@ -13,6 +11,7 @@ import {
   actionSearch,
   actionSelectPlace,
   mapState,
+  PlaceType,
   SelectedPlaceType,
 } from "./features/map/mapSlice";
 import PlaceList from "./features/map/components/placeList";

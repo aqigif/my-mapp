@@ -10,8 +10,7 @@ import {
 import { Box } from "@mui/system";
 import parse from "autosuggest-highlight/parse";
 import React from "react";
-import { SelectedPlaceType, StructuredFormatting } from "../mapSlice";
-import { PlaceType } from "./searchAutocomplete";
+import { PlaceType, SelectedPlaceType, StructuredFormatting } from "../mapSlice";
 
 const geocoder = { current: null };
 
