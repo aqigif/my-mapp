@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../redux/store";
+import { PlaceType } from "./components/searchAutocomplete";
 
 interface MainTextMatchedSubstrings {
   offset: number;
@@ -22,24 +23,45 @@ export interface SelectedPlaceType {
 
 export interface MapState {
   selectedPlace: SelectedPlaceType | null;
+  searchOptions: PlaceType[];
+  searchText: string;
+  searchValue: PlaceType | null;
 }
 
 const initialState: MapState = {
   selectedPlace: null,
+  searchOptions: [],
+  searchText: '',
+  searchValue: null,
 };
 
 export const mapSlice = createSlice({
   name: "map",
   initialState,
   reducers: {
-    selectPlace: (state, action: PayloadAction<SelectedPlaceType>) => {
+    actionSelectPlace: (state, action: PayloadAction<SelectedPlaceType>) => {
       state.selectedPlace = action.payload;
+      state.searchValue = {
+        description: action.payload.description,
+        structured_formatting: action.payload.structured_formatting,
+        place_id: action.payload.place_id,
+      }
+      state.searchText = action.payload.structured_formatting.main_text
     },
+    actionGetOptions: (state, action: PayloadAction<PlaceType[]>) => {
+      state.searchOptions = action.payload;
+    },
+    actionSearch: (state, action: PayloadAction<string>) => {
+      state.searchText = action.payload;
+    },
+    actionReset: (state) => {
+      state = initialState
+    }
   },
 });
 
-export const { selectPlace } = mapSlice.actions;
+export const { actionSelectPlace, actionGetOptions, actionSearch, actionReset} = mapSlice.actions;
 
-export const selectedPlaceData = (state: RootState) => state.map.selectedPlace;
+export const mapState = (state: RootState) => state.map;
 
 export default mapSlice.reducer;

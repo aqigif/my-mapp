@@ -2,32 +2,58 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Map from "./features/map/Map";
-import SearchAutocomplete from "./features/map/components/searchAutocomplete";
+import SearchAutocomplete, {
+  PlaceType,
+} from "./features/map/components/searchAutocomplete";
 import MapWrapper from "./features/map/components/mapWrapper";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
-import { selectedPlaceData, SelectedPlaceType, selectPlace } from "./features/map/mapSlice";
+import {
+  actionGetOptions,
+  actionReset,
+  actionSearch,
+  actionSelectPlace,
+  mapState,
+  SelectedPlaceType,
+} from "./features/map/mapSlice";
+import PlaceList from "./features/map/components/placeList";
 
 export default function App() {
   const dispatch = useAppDispatch();
-  const selectedPlace = useAppSelector(selectedPlaceData);
+  const mapStateData = useAppSelector(mapState);
+  const { selectedPlace, searchValue, searchText, searchOptions } =
+    mapStateData;
   const center = selectedPlace?.location ?? {
     lat: 38.886518,
     lng: -121.0166301,
   };
   const selectedLocation = selectedPlace?.location ?? null;
-  
+
   const onSelectLocation = (place: SelectedPlaceType) => {
-    dispatch(selectPlace({
-      description: place.description,
-      structured_formatting: place.structured_formatting,
-      place_id: place.place_id,
-      location: {
-        lat: place.location.lat,
-        lng: place.location.lng,
-      },
-    }));
-  }
-  
+    dispatch(
+      actionSelectPlace({
+        description: place.description,
+        structured_formatting: place.structured_formatting,
+        place_id: place.place_id,
+        location: {
+          lat: place.location.lat,
+          lng: place.location.lng,
+        },
+      })
+    );
+  };
+
+  const handleSearchText = (text: string) => {
+    dispatch(actionSearch(text));
+  };
+
+  const handleGetSearchOptions = (options: PlaceType[]) => {
+    dispatch(actionGetOptions(options));
+  };
+
+  const handleReset = () => {
+    dispatch(actionReset());
+  };
+
   const mapsKey = process.env.REACT_APP_GOOGLE_API_KEY;
   if (!mapsKey) return <div>no API Key</div>;
 
@@ -44,8 +70,23 @@ export default function App() {
               alignItems: "center",
             }}
           >
-            <img src="/my-mapp-logo.png" alt="brand-logo" className="h-20 mb-5 -mt-10" />
-            <SearchAutocomplete onSelectLocation={onSelectLocation} />
+            <img
+              src="/my-mapp-logo.png"
+              alt="brand-logo"
+              className="h-20 mb-5 -mt-10"
+            />
+            <SearchAutocomplete
+              value={searchText}
+              selected={searchValue}
+              onReset={handleReset}
+              onChange={handleSearchText}
+              onSearchGetOptions={handleGetSearchOptions}
+            />
+            <PlaceList
+              onSearchGetOptions={handleGetSearchOptions}
+              onSelectLocation={onSelectLocation}
+              options={searchOptions}
+            />
           </Box>
         </Grid>
         <Grid item xs={false} sm={4} md={7}>
