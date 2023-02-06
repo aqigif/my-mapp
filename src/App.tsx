@@ -18,6 +18,7 @@ import {
 } from "./features/map/mapTypes"
 import PlaceList from "./features/map/components/placeList";
 import { Typography } from "@mui/material";
+import { getPlaceDetailService } from "./features/map/mapService";
 
 export default function App() {
   const dispatch = useAppDispatch();
