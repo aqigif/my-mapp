@@ -13,7 +13,7 @@ function Map({
         <GoogleMap
           zoom={10}
           center={center}
-          mapContainerClassName="map-container"
+          mapContainerClassName="w-full h-screen"
         >
           {marker && <MarkerF position={marker}></MarkerF>}
         </GoogleMap>

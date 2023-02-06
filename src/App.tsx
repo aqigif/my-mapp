@@ -15,6 +15,7 @@ import {
   SelectedPlaceType,
 } from "./features/map/mapSlice";
 import PlaceList from "./features/map/components/placeList";
+import { Typography } from "@mui/material";
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -54,7 +55,22 @@ export default function App() {
   };
 
   const mapsKey = process.env.REACT_APP_GOOGLE_API_KEY;
-  if (!mapsKey) return <div>no API Key</div>;
+
+  // if no API KEY
+  if (!mapsKey)
+    return (
+      <div className="h-screen w-screen flex flex-col items-center justify-center">
+        <img
+          src="/static/images/brands/my-mapp-logo.png"
+          alt="brand-logo"
+          className="h-20 mb-5 -mt-10"
+        />
+        <Typography variant="h6">
+          {"Please try again later :)"}
+        </Typography>
+        <Typography>{"Sorry, unfortunately you can access MyMapp right now"}</Typography>
+      </div>
+    );
 
   return (
     <MapWrapper googleMapsApiKey={mapsKey}>
@@ -70,7 +86,7 @@ export default function App() {
             }}
           >
             <img
-              src="/my-mapp-logo.png"
+              src="/static/images/brands/my-mapp-logo.png"
               alt="brand-logo"
               className="h-20 mb-5 -mt-10"
             />

@@ -12,7 +12,16 @@ export const MapWrapper = ({
     googleMapsApiKey: googleMapsApiKey,
     libraries: ["places"],
   });
-  if (!isLoaded) return <div>Loading...</div>;
+  if (!isLoaded)
+    return (
+      <div className="h-screen w-screen flex items-center justify-center">
+        <img
+          src="/static/images/gif/loading-map.gif"
+          alt="brand-logo"
+          className="h-20 mb-5 -mt-10"
+        />
+      </div>
+    );
   return <>{children}</>;
 };
 
