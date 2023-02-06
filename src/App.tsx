@@ -11,9 +11,11 @@ import {
   actionSearch,
   actionSelectPlace,
   mapState,
+} from "./features/map/mapSlice";
+import {
   PlaceType,
   SelectedPlaceType,
-} from "./features/map/mapSlice";
+} from "./features/map/mapTypes"
 import PlaceList from "./features/map/components/placeList";
 import { Typography } from "@mui/material";
 
