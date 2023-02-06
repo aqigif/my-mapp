@@ -1,6 +1,9 @@
 import { useLoadScript } from "@react-google-maps/api";
 import React from "react";
 
+type Libraries = ("drawing" | "geometry" | "localContext" | "places" | "visualization")[];
+
+const libraries: Libraries = ["places"];
 const MapWrapper = ({
   children,
   googleMapsApiKey,
@@ -10,7 +13,7 @@ const MapWrapper = ({
 }) => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: googleMapsApiKey,
-    libraries: ["places"],
+    libraries: libraries,
   });
   if (!isLoaded)
     return (
