@@ -29,7 +29,10 @@ export const mapSlice = createSlice({
       state.searchText = action.payload;
     },
     actionReset: (state) => {
-      state = initialState
+      state.selectedPlace = initialState.selectedPlace;
+      state.searchOptions = initialState.searchOptions;
+      state.searchText = initialState.searchText;
+      state.searchValue = initialState.searchValue;
     }
   },
 });
