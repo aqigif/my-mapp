@@ -49,7 +49,7 @@ export default function Map() {
             detail: res.data?.result,
           })
         );
-      }
+      } else throw res;
     } catch (error) {
       enqueueSnackbar("An error occurred, try again")
       console.log(error);
