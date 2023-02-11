@@ -13,6 +13,7 @@ import React from "react";
 import { PlaceDetailGeoCodeType, PlaceType, SelectedPlaceType } from "../mapTypes";
 
 const geocoder = { current: null };
+const place = { current: null };
 
 export default function PlaceList({
   options,
@@ -33,6 +34,13 @@ export default function PlaceList({
         return undefined;
       }
 
+  
+      if (!place.current && (window as any).google) {
+        place.current = new (window as any).google.maps.places.PlacesService();
+      }
+      if (!place.current) {
+        return undefined;
+      }
     }, []);
   
     const onSelectFetch = React.useMemo(
@@ -48,6 +56,24 @@ export default function PlaceList({
         ),
       []
     );
+
+
+    const onSelectFetchDetail = React.useMemo(
+      () =>
+        debounce(
+          (
+            request: { placeId: string },
+            callback: (results?: unknown) => void
+          ) => {
+            console.log(place.current);
+            console.log(geocoder.current);
+            (place.current as any).getDetails(request, callback);
+          },
+          400
+        ),
+      []
+    );
+  
   
     const onSelect = (place: PlaceType) => {
       onSearchGetOptions(place ? [...options] : options);
@@ -70,7 +96,11 @@ export default function PlaceList({
           }
         }
       );
+      onSelectFetchDetail({placeId: place.place_id}, (results) => {
+        //
+      });
     };
+
   return (
       <List disablePadding className="mx-0 w-full">
         {options.map((option, index) => {
@@ -102,7 +132,6 @@ export default function PlaceList({
                       <Box
                         key={index + "parts"}
                         component="span"
-                        className="mr-1"
                         sx={{ fontWeight: part.highlight ? "bold" : "regular" }}
                       >
                         {part.text}
