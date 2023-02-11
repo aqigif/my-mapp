@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import { useSnackbar } from 'notistack';
+import { useSnackbar } from "notistack";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import MapViewer from "./components/mapViewer";
 import MapWrapper from "./components/mapWrapper";
@@ -51,7 +51,7 @@ export default function Map() {
         );
       } else throw res;
     } catch (error) {
-      enqueueSnackbar("An error occurred, try again")
+      enqueueSnackbar("An error occurred, try again", { variant: "error" });
       console.log(error);
     }
   };
