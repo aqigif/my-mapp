@@ -123,7 +123,7 @@ export default function Map() {
           </Box>
           {selectedLocation && (
             <Grid item xs={12} sm={false} md={false} lg={false} xl={false}>
-              <div className="relative md:hidden">
+              <div className="relative sm:hidden">
                 <MapViewer center={center} marker={selectedLocation} />
               </div>
             </Grid>
