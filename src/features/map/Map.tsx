@@ -14,7 +14,7 @@ import {
   actionReset,
   actionSearch,
   actionSelectPlace,
-  mapState
+  mapState,
 } from "./mapSlice";
 import { PlaceType, SelectedPlaceType } from "./types/mapTypes";
 
@@ -117,6 +117,13 @@ export default function App() {
               />
             )}
           </Box>
+          {selectedLocation && (
+            <Grid item xs={12} sm={false} md={false}>
+              <div className="relative">
+                <Map center={center} marker={selectedLocation} />
+              </div>
+            </Grid>
+          )}
         </Grid>
         <Grid item xs={false} sm={4} md={7}>
           <div className="relative">
