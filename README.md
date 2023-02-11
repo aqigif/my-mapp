@@ -1,9 +1,9 @@
 # My Mapp applications
 ## an application to find your desired place
 
-The preview was deployed on [https://my-mapp-aqigif.netlify.app/](https://my-mapp-aqigif.netlify.app/)
+The preview was deployed on [my-mapp-aqigif.netlify.app](https://my-mapp-aqigif.netlify.app/)
 This project was bootstrapped with 
-- [Create React App](https://github.com/facebook/create-react-app), 
+- [Create React App](https://github.com/facebook/create-react-app)
 - [Redux](https://redux.js.org/) 
 - [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
 - [Material UI](https://mui.com/)
