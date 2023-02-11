@@ -10,6 +10,7 @@ import {
 import { Box } from "@mui/system";
 import parse from "autosuggest-highlight/parse";
 import React from "react";
+import { getPlaceDetailService } from "../mapService";
 import { PlaceDetailGeoCodeType, PlaceType, SelectedPlaceType } from "../mapTypes";
 
 const geocoder = { current: null };
@@ -54,28 +55,9 @@ export default function PlaceList({
           },
           400
         ),
-      []
-    );
-
-
-    const onSelectFetchDetail = React.useMemo(
-      () =>
-        debounce(
-          (
-            request: { placeId: string },
-            callback: (results?: unknown) => void
-          ) => {
-            console.log(place.current);
-            console.log(geocoder.current);
-            (place.current as any).getDetails(request, callback);
-          },
-          400
-        ),
-      []
-    );
+      []);
   
-  
-    const onSelect = (place: PlaceType) => {
+    const onSelect = async (place: PlaceType) => {
       onSearchGetOptions(place ? [...options] : options);
   
       onSelectFetch(
@@ -96,9 +78,8 @@ export default function PlaceList({
           }
         }
       );
-      onSelectFetchDetail({placeId: place.place_id}, (results) => {
-        //
-      });
+      const res = await getPlaceDetailService(place.place_id);
+      console.log(res);
     };
 
   return (
