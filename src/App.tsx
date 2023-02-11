@@ -12,7 +12,7 @@ import {
   actionSelectPlace,
   mapState,
 } from "./features/map/mapSlice";
-import { PlaceType, SelectedPlaceType } from "./features/map/mapTypes";
+import { PlaceType, SelectedPlaceType } from "./features/map/types/mapTypes";
 import PlaceList from "./features/map/components/placeList";
 import { Typography } from "@mui/material";
 import { getPlaceDetailService } from "./features/map/mapService";

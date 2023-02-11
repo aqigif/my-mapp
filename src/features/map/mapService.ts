@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { PlaceDetailsType } from "./placeTypes";
+import { PlaceDetailsType } from "./types/placeTypes";
 export const GOOGLE_IMAGE_STATIC = `/maps/api/place/photo?maxwidth=400&key=${process.env.REACT_APP_GOOGLE_API_KEY}&photoreference=`;
 
 interface PlaceDetailResponse extends AxiosResponse {

@@ -1,5 +1,5 @@
 
-import { PlaceDetailsType } from "./placeTypes";
+import { PlaceDetailsType } from "../types/placeTypes";
 interface MainTextMatchedSubstrings {
   offset: number;
   length: number;

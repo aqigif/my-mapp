@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../redux/store";
-import { MapState, PlaceType, SelectedPlaceType } from "./mapTypes";
+import { MapState, PlaceType, SelectedPlaceType } from "./types/mapTypes";
 
 const initialState: MapState = {
   selectedPlace: null,

@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import parse from "autosuggest-highlight/parse";
-import { PlaceType, SelectedPlaceType } from "../mapTypes";
+import { PlaceType, SelectedPlaceType } from "../types/mapTypes";
 
 export default function PlaceList({
   options,

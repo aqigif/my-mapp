@@ -7,7 +7,7 @@ import {
 import TextField from "@mui/material/TextField";
 import { debounce } from "@mui/material/utils";
 import * as React from "react";
-import { PlaceType } from "../mapTypes";
+import { PlaceType } from "../types/mapTypes";
 
 const autocompleteService = { current: null };
 

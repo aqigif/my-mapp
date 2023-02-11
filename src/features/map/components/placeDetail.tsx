@@ -1,7 +1,7 @@
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { Button, Link, Rating } from "@mui/material";
 import { GOOGLE_IMAGE_STATIC } from "../mapService";
-import { PlaceDetailsType } from "../placeTypes";
+import { PlaceDetailsType } from "../types/placeTypes";
 
 const PlaceDetail = ({ data }: { data: PlaceDetailsType }) => {
   return (
