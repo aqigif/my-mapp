@@ -2,8 +2,9 @@ import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import { useSnackbar } from 'notistack';
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import Map from "./components/mapViewer";
+import MapViewer from "./components/mapViewer";
 import MapWrapper from "./components/mapWrapper";
 import PlaceDetail from "./components/placeDetail";
 import PlaceList from "./components/placeList";
@@ -18,7 +19,8 @@ import {
 } from "./mapSlice";
 import { PlaceType, SelectedPlaceType } from "./types/mapTypes";
 
-export default function App() {
+export default function Map() {
+  const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
   const mapStateData = useAppSelector(mapState);
   const { selectedPlace, searchValue, searchText, searchOptions } =
@@ -32,6 +34,7 @@ export default function App() {
   const onSelectLocation = async (place: SelectedPlaceType) => {
     try {
       const res = await getPlaceDetailService(place.place_id);
+      console.log(res);
       if (res.status === 200 && res.data?.result?.place_id) {
         const result = res.data?.result;
         dispatch(
@@ -48,6 +51,7 @@ export default function App() {
         );
       }
     } catch (error) {
+      enqueueSnackbar("An error occurred, try again")
       console.log(error);
     }
   };
@@ -120,14 +124,14 @@ export default function App() {
           {selectedLocation && (
             <Grid item xs={12} sm={false} md={false} lg={false} xl={false}>
               <div className="relative md:hidden">
-                <Map center={center} marker={selectedLocation} />
+                <MapViewer center={center} marker={selectedLocation} />
               </div>
             </Grid>
           )}
         </Grid>
         <Grid item xs={false} sm={4} md={7}>
           <div className="relative">
-            <Map center={center} marker={selectedLocation} />
+            <MapViewer center={center} marker={selectedLocation} />
           </div>
         </Grid>
       </Grid>

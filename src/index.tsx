@@ -3,6 +3,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { SnackbarProvider } from 'notistack';
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
@@ -20,7 +21,9 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <App />
+        <SnackbarProvider maxSnack={3}>
+            <App />
+        </SnackbarProvider>
       </ThemeProvider>
     </Provider>
   </React.StrictMode>
