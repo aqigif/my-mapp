@@ -81,7 +81,7 @@ export default function Map() {
         />
         <Typography variant="h6">{"Please try again later :)"}</Typography>
         <Typography>
-          {"Sorry, unfortunately you can access MyMapp right now"}
+          {"Sorry, unfortunately you can't access MyMapp right now"}
         </Typography>
       </div>
     );
