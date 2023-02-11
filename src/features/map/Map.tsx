@@ -89,7 +89,15 @@ export default function Map() {
   return (
     <MapWrapper googleMapsApiKey={mapsKey}>
       <Grid container component="main" sx={{ height: "100vh" }}>
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={5}
+          component={Paper}
+          elevation={6}
+          square
+        >
           <Box
             sx={{
               my: 8,
@@ -122,14 +130,12 @@ export default function Map() {
             )}
           </Box>
           {selectedLocation && (
-            <Grid item xs={12} sm={false} md={false} lg={false} xl={false}>
-              <div className="relative sm:hidden">
-                <MapViewer center={center} marker={selectedLocation} />
-              </div>
-            </Grid>
+            <div className="relative md:hidden">
+              <MapViewer center={center} marker={selectedLocation} />
+            </div>
           )}
         </Grid>
-        <Grid item xs={false} sm={4} md={7}>
+        <Grid item xs={false} sm={false} md={7}>
           <div className="relative">
             <MapViewer center={center} marker={selectedLocation} />
           </div>
