@@ -91,6 +91,7 @@ export default function SearchAutocomplete({
         fullWidth
         value={value}
         onChange={(event) => {
+          onReset();
           onChange(event.target.value);
         }}
         placeholder="Find your desired place ..."

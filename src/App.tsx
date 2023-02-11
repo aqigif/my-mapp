@@ -12,13 +12,11 @@ import {
   actionSelectPlace,
   mapState,
 } from "./features/map/mapSlice";
-import {
-  PlaceType,
-  SelectedPlaceType,
-} from "./features/map/mapTypes"
+import { PlaceType, SelectedPlaceType } from "./features/map/mapTypes";
 import PlaceList from "./features/map/components/placeList";
 import { Typography } from "@mui/material";
 import { getPlaceDetailService } from "./features/map/mapService";
+import PlaceDetail from "./features/map/components/placeDetail";
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -31,19 +29,27 @@ export default function App() {
   };
   const selectedLocation = selectedPlace?.location ?? null;
 
-  const onSelectLocation = (place: SelectedPlaceType) => {
-    getPlaceDetailService(place.place_id)
-    dispatch(
-      actionSelectPlace({
-        description: place.description,
-        structured_formatting: place.structured_formatting,
-        place_id: place.place_id,
-        location: {
-          lat: place.location.lat,
-          lng: place.location.lng,
-        },
-      })
-    );
+  const onSelectLocation = async (place: SelectedPlaceType) => {
+    try {
+      const res = await getPlaceDetailService(place.place_id);
+      if (res.status === 200 && res.data?.result?.place_id) {
+        const result = res.data?.result;
+        dispatch(
+          actionSelectPlace({
+            description: place.description,
+            structured_formatting: place.structured_formatting,
+            place_id: place.place_id,
+            location: {
+              lat: result?.geometry?.location?.lat,
+              lng: result?.geometry?.location?.lng,
+            },
+            detail: res.data?.result,
+          })
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSearchText = (text: string) => {
@@ -69,10 +75,10 @@ export default function App() {
           alt="brand-logo"
           className="h-20 mb-5 -mt-10"
         />
-        <Typography variant="h6">
-          {"Please try again later :)"}
+        <Typography variant="h6">{"Please try again later :)"}</Typography>
+        <Typography>
+          {"Sorry, unfortunately you can access MyMapp right now"}
         </Typography>
-        <Typography>{"Sorry, unfortunately you can access MyMapp right now"}</Typography>
       </div>
     );
 
@@ -101,11 +107,15 @@ export default function App() {
               onChange={handleSearchText}
               onSearchGetOptions={handleGetSearchOptions}
             />
-            <PlaceList
-              onSearchGetOptions={handleGetSearchOptions}
-              onSelectLocation={onSelectLocation}
-              options={searchOptions}
-            />
+            {selectedPlace?.detail ? (
+              <PlaceDetail data={selectedPlace?.detail} />
+            ) : (
+              <PlaceList
+                onSearchGetOptions={handleGetSearchOptions}
+                onSelectLocation={onSelectLocation}
+                options={searchOptions}
+              />
+            )}
           </Box>
         </Grid>
         <Grid item xs={false} sm={4} md={7}>

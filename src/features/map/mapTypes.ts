@@ -1,3 +1,5 @@
+
+import { PlaceDetailsType } from "./placeTypes";
 interface MainTextMatchedSubstrings {
   offset: number;
   length: number;
@@ -17,10 +19,11 @@ export interface SelectedPlaceType {
   description: string;
   structured_formatting: StructuredFormatting;
   place_id: string;
-  location: {
+  location?: {
     lat: number;
     lng: number;
   };
+  detail?: PlaceDetailsType;
 }
 
 export interface PlaceDetailGeoCodeType {
