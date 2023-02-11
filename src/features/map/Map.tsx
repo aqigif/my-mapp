@@ -118,8 +118,8 @@ export default function App() {
             )}
           </Box>
           {selectedLocation && (
-            <Grid item xs={12} sm={false} md={false}>
-              <div className="relative">
+            <Grid item xs={12} sm={false} md={false} lg={false} xl={false}>
+              <div className="relative md:hidden">
                 <Map center={center} marker={selectedLocation} />
               </div>
             </Grid>
