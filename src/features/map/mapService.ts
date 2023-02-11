@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import client from "../../services";
 import { PlaceDetailsType } from "./types/placeTypes";
-export const GOOGLE_IMAGE_STATIC = `${process.env.REACT_APP_PROXY_URL}/maps/photo/400/`;
+export const GOOGLE_IMAGE_STATIC = `${process.env.REACT_APP_PROXY_URL}/maps-photo/${process.env.REACT_APP_GOOGLE_API_KEY}/`;
 
 interface PlaceDetailResponse extends AxiosResponse {
   data: {
@@ -16,20 +16,10 @@ export const getPlaceDetailService = async (
 ): Promise<PlaceDetailResponse> => {
   return client({
     method: "get",
-    url: "/maps/"+place_id,
-  });
-};
-
-export const getPhotoFromMap = async (
-  photoReference: string
-): Promise<PlaceDetailResponse> => {
-  return client({
-    method: "get",
-    baseURL: "https://maps.googleapis.com",
-    url: "/maps/api/place/photo?maxwidth=400",
+    url: "/maps",
     params: {
-      photoReference: photoReference,
       key: process.env.REACT_APP_GOOGLE_API_KEY,
-    },
+      place_id: place_id
+    }
   });
 };
