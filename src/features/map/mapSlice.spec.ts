@@ -2,7 +2,7 @@ import { dummySearchOptions, dummySelectData } from "./dummy";
 import mapSlice, { actionGetOptions, actionReset, actionSearch, actionSelectPlace } from "./mapSlice";
 import { MapState } from "./types/mapTypes";
 
-describe("map reducer", () => {
+describe("map slice", () => {
   const initialState: MapState = {
     selectedPlace: null,
     searchOptions: [],
