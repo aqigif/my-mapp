@@ -1,4 +1,4 @@
-# My Mapp applications
+# My Mapp
 ## an application to find your desired place
 
 The preview was deployed on [my-mapp-aqigif.netlify.app](https://my-mapp-aqigif.netlify.app/)
