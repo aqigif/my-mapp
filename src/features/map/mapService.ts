@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import client from "../../services";
 import { PlaceDetailsType } from "./types/placeTypes";
-export const GOOGLE_IMAGE_STATIC = `${process.env.REACT_APP_PROXY_URL}/maps-photo/${process.env.REACT_APP_GOOGLE_API_KEY}/`;
+export const GOOGLE_IMAGE_STATIC = `${process.env.REACT_APP_PROXY_URL}/maps-photo/?key=${process.env.REACT_APP_GOOGLE_API_KEY}&photoreference=`;
 
 interface PlaceDetailResponse extends AxiosResponse {
   data: {
